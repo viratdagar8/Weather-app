@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather_app</title>
     <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
   </head>
   <body>
     <ul class="navbar">
       <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#">Active</a>
+        <a class="nav-link active" href="#" id="liveMapBtn">Live Map</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Link</a>
@@ -23,6 +27,12 @@
     </ul>
 
     <div class="background">
+      <div id="mapSection">
+        <h2>Live Weather Map</h2>
+        <button id="closeMap">X</button>
+        <div id="map"></div>
+      </div>
+
       <div class="card">
         <div class="search">
           <input type="text" placeholder="Enter city name" spellcheck="false" />
@@ -54,6 +64,8 @@
         </div>
       </div>
     </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
