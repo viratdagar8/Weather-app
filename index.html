@@ -13,7 +13,7 @@
   <body>
     <ul class="navbar">
       <li class="nav-item">
-        <a class="nav-link active" href="#" id="liveMapBtn">Live Map</a>
+        <a class="nav-link" href="#" id="radarMapBtn">RADAR</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Link</a>
@@ -28,9 +28,31 @@
 
     <div class="background">
       <div id="mapSection">
-        <h2>Live Weather Map</h2>
+        <h2>Weather Radar</h2>
         <button id="closeMap">X</button>
         <div id="map"></div>
+        <div class="radar-controls">
+          <button id="playRadar">▶ Play</button>
+          <button id="pauseRadar">⏸ Pause</button>
+
+          <input type="range" id="radarTimeline" min="0" value="0" step="1" />
+
+          <span id="radarTime">Radar</span>
+        </div>
+        <div class="radar-legend">
+          <h4>Precipitation</h4>
+          <div class="radar-legend">
+            <div class="color-bar"></div>
+
+            <div class="legend-labels">
+              <span>Light</span>
+              <span>Moderate</span>
+              <span>Heavy</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="radar-credit">Weather data by RainViewer</p>
       </div>
 
       <div class="card">

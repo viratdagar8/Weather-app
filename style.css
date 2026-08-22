@@ -127,7 +127,7 @@ body{
 
 #map {
     width: 100%;
-    height: 600px;
+    height: 0;
     border-radius: 20px;
     overflow: hidden;
 }
@@ -178,4 +178,83 @@ body{
     height: 500px;
     border-radius: 20px;
     overflow: hidden;
+}
+.radar-credit {
+  text-align: center;
+  font-size: 12px;
+  margin-top: 8px;
+}
+.radar-controls {
+    width: 100%;
+    background: white;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 0 0 15px 15px;
+}
+
+.radar-controls button {
+    border: none;
+    padding: 8px 14px;
+    border-radius: 20px;
+    background: #3a86ff;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.radar-controls button:hover {
+    background: #2563d9;
+}
+
+#radarTimeline {
+    flex: 1;
+    cursor: pointer;
+}
+
+#radarTime {
+    color: #333;
+    font-size: 13px;
+    min-width: 80px;
+    text-align: center;
+}
+
+.radar-credit {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 8px;
+}
+.radar-legend {
+    background: white;
+    padding: 12px 15px;
+    border-radius: 10px;
+    width: 100%;
+    margin: 10px auto;
+    color: #222;
+}
+
+.radar-legend h4 {
+    text-align: center;
+    margin-bottom: 8px;
+    white-space: nowrap;
+}
+
+.color-bar {
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;
+    background: linear-gradient(
+        to right,
+        #00ff00,
+        #ffff00,
+        #ff0000
+    );
+}
+
+.legend-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-top: 5px;
 }

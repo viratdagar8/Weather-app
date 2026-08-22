@@ -10,30 +10,165 @@ const apiUrl =
 
 let map;
 let weatherLayer;
-
+let radarFrames = [];
+let radarIndex = 0;
+let radarTimer = null;
+let radarHost = "";
 
 // ======================
 // MAP ELEMENTS
 // ======================
 
-const liveMapBtn = document.querySelector("#liveMapBtn");
+const radarMapBtn = document.querySelector("#radarMapBtn");
 const mapSection = document.querySelector("#mapSection");
 const closeMap = document.querySelector("#closeMap");
 const navbar = document.querySelector(".navbar");
 
 
 // ======================
-// OPEN MAP
+// LOAD RADAR
+// ======================
+        async function addRadarLayer() {
+
+          try {
+
+            const response = await fetch(
+              "https://api.rainviewer.com/public/weather-maps.json"
+            );
+
+            const data = await response.json();
+
+            console.log("Radar data:", data);
+
+            // Host
+            radarHost = data.host;
+
+            // Past radar frames
+            radarFrames = data.radar.past;
+
+            console.log("Radar frames:", radarFrames);
+
+            // Timeline maximum
+            document.querySelector("#radarTimeline").max =
+              radarFrames.length - 1;
+
+            // Start with latest frame
+            radarIndex = radarFrames.length - 1;
+
+            showRadarFrame(radarIndex);
+
+          } catch (error) {
+
+            console.error("Radar loading error:", error);
+
+          }
+        }
+
+         function showRadarFrame(index) {
+
+          if (!radarFrames.length) {
+            return;
+          }
+
+          const frame = radarFrames[index];
+
+          const radarUrl =
+            `${radarHost}${frame.path}/256/{z}/{x}/{y}/2/1_1.png`;
+
+          // Purana radar layer remove
+          if (weatherLayer) {
+            map.removeLayer(weatherLayer);
+          }
+
+          // New radar frame
+          weatherLayer = L.tileLayer(
+            radarUrl,
+            {
+              opacity: 0.75,
+              zIndex: 10,
+              maxZoom: 7
+            }
+          ).addTo(map);
+
+
+          // Timeline update
+          document.querySelector("#radarTimeline").value = index;
+
+
+          // Time display
+          const date = new Date(frame.time * 1000);
+
+          document.querySelector("#radarTime").innerHTML =
+            date.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit"
+            });
+        }
+                 
+        //==========================
+        //Play button
+        //==========================
+
+        const playRadar = document.querySelector("#playRadar");
+
+        playRadar.addEventListener("click", () => {
+
+          if (radarTimer) {
+            return;
+          }
+
+          radarTimer = setInterval(() => {
+
+            radarIndex++;
+
+            // Last frame ke baad first frame
+            if (radarIndex >= radarFrames.length) {
+              radarIndex = 0;
+            }
+
+            showRadarFrame(radarIndex);
+
+          }, 800);
+
+        });
+        //===============================
+        //Pause button
+        //============================
+         const pauseRadar = document.querySelector("#pauseRadar");
+
+          pauseRadar.addEventListener("click", () => {
+
+            clearInterval(radarTimer);
+
+            radarTimer = null;
+
+          });
+
+          //====================
+          //TIMELINE
+          //====================
+        const radarTimeline =
+          document.querySelector("#radarTimeline");
+
+          radarTimeline.addEventListener("input", () => {
+
+          radarIndex = Number(radarTimeline.value);
+
+          showRadarFrame(radarIndex);
+
+        });
+
+
+
+// ======================
+// OPEN RADAR MAP
 // ======================
 
-liveMapBtn.addEventListener("click", function (e) {
+radarMapBtn.addEventListener("click", function (e) {
 
   e.preventDefault();
 
-  // Hide navbar
   navbar.style.display = "none";
-
-  // Show map
   mapSection.style.display = "block";
 
 
@@ -42,37 +177,31 @@ liveMapBtn.addEventListener("click", function (e) {
 
     map = L.map("map").setView(
       [28.6692, 77.4538],
-      8
+      7
     );
 
 
-    // Normal map
+    // Base map
     L.tileLayer(
       "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       {
-        attribution: "&copy; OpenStreetMap contributors"
+        attribution:
+          "&copy; OpenStreetMap contributors"
       }
     ).addTo(map);
 
 
-    // Weather precipitation layer
-    weatherLayer = L.tileLayer(
-  `https://maps.openweathermap.org/maps/2.0/weather/PA0/{z}/{x}/{y}?appid=${apiKey}`,
-  {
-    opacity: 0.8,
-    zIndex: 10
-  }
-     ).addTo(map);
+    // 🌧️ RADAR LAYER
+    addRadarLayer();
+
   }
 
 
-  // Scroll to map
   mapSection.scrollIntoView({
     behavior: "smooth"
   });
 
 
-  // Fix Leaflet map size
   setTimeout(() => {
 
     map.invalidateSize();
@@ -93,6 +222,12 @@ closeMap.addEventListener("click", () => {
   navbar.style.display = "flex";
 
 });
+
+
+
+
+
+
 
 
 // ======================
@@ -131,23 +266,17 @@ async function checkweather(city) {
   }
 
 
-  const data = await response.json();
+        const data = await response.json();
 
-  console.log(data);
+      console.log(data);
 
-
-  // ======================
-  // MOVE MAP TO CITY
-  // ======================
-
-  if (map) {
-
-    map.setView(
-      [data.coord.lat, data.coord.lon],
-      10
-    );
-
-  }
+      // Search ki hui city par radar map center karo
+      if (map) {
+          map.setView(
+              [data.coord.lat, data.coord.lon],
+              10
+          );
+      }
 
 
   // ======================
