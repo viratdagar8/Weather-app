@@ -8,6 +8,24 @@
 body{
     background-color: #FFF4F4;
 }
+.legend-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-top: 5px;
+}
+.app-title {
+    text-align: center;
+    margin-top: 25px;
+    background: linear-gradient(135deg,#ff4d6d,#3a86ff);
+    width: auto;
+
+}
+
+.app-title h1 {
+    font-size: 32px;
+    margin: 0;
+}
 .card{
     width: 90%;
     max-width: 470px;
@@ -24,21 +42,27 @@ body{
 
 .navbar {
     display: flex;
-
+    align-items: center;
     justify-content: center;
-    gap: 40px;
+
     list-style: none;
+
     margin: 10px auto 0;
+    padding: 0 20px;
+    gap: 20px;
+
+    background-color: rgba(69, 138, 248, 0.7);
+
     border-radius: 20px;
-    padding: 30px 15px;
-    background-color: rgb(69, 138, 248,0.7);
-    box-sizing: border-box;
-    height: 30px;
+
+    height: 60px;
+
     position: absolute;
-    top: 20px;
+    top: 80px;
     left: 0;
     right: 0;
 }
+
 
 .search{
     width: 100%;
@@ -252,9 +276,67 @@ body{
     );
 }
 
-.legend-labels {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
+
+
+.app-title p {
     margin-top: 5px;
+    font-size: 14px;
 }
+
+/* ======================
+   THEME
+====================== */
+
+body {
+    background-color: #FFF4F4;
+    color: #222;
+    transition: 0.3s;
+}
+
+.theme-item {
+    position: absolute;
+    right: 20px;
+}
+.theme-btn {
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    background: #FFD6E0;
+    color: #222;
+    font-size: 14px;
+}
+
+/* Dark Mode */
+
+body.dark-mode {
+    background-color: #121212;
+    color: white;
+}
+
+body.dark-mode .navbar {
+    background-color: rgba(30, 30, 30, 0.9);
+}
+
+body.dark-mode .card {
+    background: linear-gradient(45deg, #242424, #3a3a3a);
+}
+
+body.dark-mode .search input {
+    background: #333;
+    color: white;
+}
+
+body.dark-mode .search button {
+    background: #333;
+}
+
+body.dark-mode .app-title {
+    color: white;
+}
+
+body.dark-mode .theme-btn {
+    background: #333;
+    color: white;
+}
+  
