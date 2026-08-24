@@ -9,6 +9,10 @@
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
   </head>
   <body>
     <div class="app-title">
@@ -23,13 +27,15 @@
       <li class="nav-item">
         <a class="nav-link" href="#">Link</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+      <!-- Profile page -->
+      <li class="Profile-item">
+        <a class="profile-link" href="login.html" id="profileBtn">
+          <i class="fa-regular fa-circle-user"></i>
+        </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-      </li>
-      <li class="nav-item">
+      <!-- Dark mode -->
+      <li class="nav-item"></li>
+      <li class="theme-item">
         <button id="themeToggle" class="theme-btn">🌙 Dark</button>
       </li>
     </ul>

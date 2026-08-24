@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>AtmoWeather - Login</title>
+
+    <link rel="stylesheet" href="login.css" />
+  </head>
+
+  <body>
+    <wu-form-sign-in>
+      <!-- =========================
+           LOGIN FORM
+      ========================== -->
+
+      <form id="loginForm" class="wu-form-v2">
+        <div class="row">
+          <div class="columns">
+            <h1>Log In</h1>
+          </div>
+
+          <!-- Email -->
+
+          <div class="medium-12 columns">
+            <div class="form-group">
+              <label for="form-signin-email"> Email </label>
+
+              <div class="input-label">
+                <input
+                  id="form-signin-email"
+                  type="email"
+                  placeholder="Enter your email"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Password -->
+
+          <div class="medium-12 columns">
+            <div class="form-group">
+              <label for="form-signin-password"> Password </label>
+
+              <a href="#" class="float-right" id="forgotPassword">
+                Forgot Password?
+              </a>
+
+              <div class="input-label">
+                <input
+                  id="form-signin-password"
+                  type="password"
+                  placeholder="Enter your password"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Login Button -->
+
+          <div class="columns">
+            <div class="text-center">
+              <div class="wu-form-btn">
+                <input
+                  id="signIn"
+                  type="submit"
+                  value="Log In"
+                  class="button"
+                />
+              </div>
+
+              Don't have an account?
+
+              <a href="#" id="signupLink"> Sign up </a>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <!-- =========================
+           SIGN UP FORM
+      ========================== -->
+
+      <form id="signupForm" class="wu-form-v2" style="display: none">
+        <div class="row">
+          <div class="columns">
+            <h1>Create Account</h1>
+          </div>
+
+          <!-- Name -->
+
+          <div class="medium-12 columns">
+            <div class="form-group">
+              <label for="signupName"> Name </label>
+
+              <div class="input-label">
+                <input
+                  id="signupName"
+                  type="text"
+                  placeholder="Enter your name"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Email -->
+
+          <div class="medium-12 columns">
+            <div class="form-group">
+              <label for="signupEmail"> Email </label>
+
+              <div class="input-label">
+                <input
+                  id="signupEmail"
+                  type="email"
+                  placeholder="Enter your email"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Password -->
+
+          <div class="medium-12 columns">
+            <div class="form-group">
+              <label for="signupPassword"> Password </label>
+
+              <div class="input-label">
+                <input
+                  id="signupPassword"
+                  type="password"
+                  placeholder="Create a password"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Confirm Password -->
+
+          <div class="medium-12 columns">
+            <div class="form-group">
+              <label for="confirmPassword"> Confirm Password </label>
+
+              <div class="input-label">
+                <input
+                  id="confirmPassword"
+                  type="password"
+                  placeholder="Confirm your password"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Sign Up Button -->
+
+          <div class="columns">
+            <div class="text-center">
+              <div class="wu-form-btn">
+                <input
+                  id="createAccount"
+                  type="submit"
+                  value="Sign Up"
+                  class="button"
+                />
+              </div>
+
+              Already have an account?
+
+              <a href="#" id="loginLink"> Log In </a>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <!-- =========================
+           TERMS
+      ========================== -->
+
+      <div class="row">
+        <div class="columns">
+          <div class="wu-tos">
+            <a href="https://weather.com/privacy/terms-of-use" target="_blank">
+              Terms of Use
+            </a>
+
+            <span> | </span>
+
+            <a
+              href="https://weather.com/privacy/privacy-policy"
+              target="_blank"
+            >
+              Privacy Policy
+            </a>
+          </div>
+        </div>
+      </div>
+    </wu-form-sign-in>
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+      const loginForm = document.getElementById("loginForm");
+
+      const signupForm = document.getElementById("signupForm");
+
+      const signupLink = document.getElementById("signupLink");
+
+      const loginLink = document.getElementById("loginLink");
+
+      // LOGIN → SIGN UP
+
+      signupLink.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        loginForm.style.display = "none";
+
+        signupForm.style.display = "block";
+      });
+
+      // SIGN UP → LOGIN
+
+      loginLink.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        signupForm.style.display = "none";
+
+        loginForm.style.display = "block";
+      });
+
+      // LOGIN
+
+      loginForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const email = document.getElementById("form-signin-email").value;
+
+        const password = document.getElementById("form-signin-password").value;
+
+        console.log("Login Email:", email);
+        console.log("Login Password:", password);
+
+        alert("Login form submitted!");
+      });
+
+      // SIGN UP
+
+      signupForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const name = document.getElementById("signupName").value;
+
+        const email = document.getElementById("signupEmail").value;
+
+        const password = document.getElementById("signupPassword").value;
+
+        const confirmPassword =
+          document.getElementById("confirmPassword").value;
+
+        // Check password
+
+        if (password !== confirmPassword) {
+          alert("Passwords do not match!");
+
+          return;
+        }
+
+        console.log("Name:", name);
+        console.log("Email:", email);
+        console.log("Password:", password);
+
+        alert("Account created successfully!");
+
+        // Go back to Login
+
+        signupForm.style.display = "none";
+
+        loginForm.style.display = "block";
+      });
+
+      // FORGOT PASSWORD
+
+      document
+        .getElementById("forgotPassword")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+
+          alert("Forgot password feature will be added later.");
+        });
+    </script>
+  </body>
+</html>
