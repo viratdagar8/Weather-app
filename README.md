@@ -8,21 +8,21 @@ A simple and responsive Weather App built using HTML, CSS, and JavaScript. The a
 
 ## Features
 
-* Search weather by city name
-* Displays current temperature
-* Shows humidity information
-* Shows wind speed
-* Displays weather condition
-* Dynamic weather images based on weather conditions
-* Responsive design for different screen sizes
-* Simple and user-friendly interface
+- Search weather by city name
+- Displays current temperature
+- Shows humidity information
+- Shows wind speed
+- Displays weather condition
+- Dynamic weather images based on weather conditions
+- Responsive design for different screen sizes
+- Simple and user-friendly interface
 
 ## Technologies Used
 
-* HTML5
-* CSS3
-* JavaScript
-* OpenWeatherMap API
+- HTML5
+- CSS3
+- JavaScript
+- OpenWeatherMap API
 
 ## Project Structure
 
@@ -82,19 +82,19 @@ Enter a city name in the search field and click the search button. The applicati
 
 The application is designed to work on:
 
-* Desktop
-* Laptop
-* Tablet
-* Mobile devices
+- Desktop
+- Laptop
+- Tablet
+- Mobile devices
 
 ## Future Improvements
 
-* Add 5-day weather forecast
-* Add current location detection
-* Add weather alerts
-* Add temperature unit conversion
-* Improve error handling
-* Add more weather information
+- Add 5-day weather forecast
+- Add current location detection
+- Add weather alerts
+- Add temperature unit conversion
+- Improve error handling
+- Add more weather information
 
 ## Author
 
