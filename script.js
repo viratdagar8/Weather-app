@@ -168,6 +168,7 @@ radarMapBtn.addEventListener("click", function (e) {
 
   e.preventDefault();
 
+  earthquakeSection.style.display = "none";
   navbar.style.display = "none";
   mapSection.style.display = "block";
 
@@ -220,6 +221,193 @@ closeMap.addEventListener("click", () => {
   mapSection.style.display = "none";
 
   navbar.style.display = "flex";
+
+});
+
+
+// ======================
+// EARTHQUAKE ELEMENTS
+// ======================
+
+const earthquakeBtn = document.querySelector("#earthquakeBtn");
+const earthquakeSection = document.querySelector("#earthquakeSection");
+const closeEarthquake = document.querySelector("#closeEarthquake");
+const earthquakeList = document.querySelector("#earthquakeList");
+const earthquakeStatus = document.querySelector("#earthquakeStatus");
+const earthquakeRange = document.querySelector("#earthquakeRange");
+
+let earthquakesLoaded = false;
+
+const USGS_FEED_BASE =
+  "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/";
+
+
+// ======================
+// MAGNITUDE → SEVERITY CLASS
+// ======================
+
+function magnitudeClass(mag) {
+
+  if (mag === null || mag === undefined) {
+    return "mag-low";
+  }
+
+  if (mag < 4) {
+    return "mag-low";
+  } else if (mag < 5) {
+    return "mag-mid";
+  } else if (mag < 6) {
+    return "mag-high";
+  } else {
+    return "mag-severe";
+  }
+
+}
+
+
+// ======================
+// RELATIVE TIME LABEL
+// ======================
+
+function timeAgo(timestamp) {
+
+  const diffMs = Date.now() - timestamp;
+  const diffMin = Math.round(diffMs / 60000);
+
+  if (diffMin < 1) {
+    return "just now";
+  } else if (diffMin < 60) {
+    return `${diffMin} min ago`;
+  }
+
+  const diffHrs = Math.round(diffMin / 60);
+
+  if (diffHrs < 24) {
+    return `${diffHrs} hr ago`;
+  }
+
+  const diffDays = Math.round(diffHrs / 24);
+
+  return `${diffDays} day${diffDays > 1 ? "s" : ""} ago`;
+
+}
+
+
+// ======================
+// LOAD EARTHQUAKES
+// ======================
+
+async function loadEarthquakes(feedName) {
+
+  earthquakeStatus.style.display = "block";
+  earthquakeStatus.textContent = "Loading recent earthquakes…";
+  earthquakeList.innerHTML = "";
+
+  try {
+
+    const response = await fetch(
+      `${USGS_FEED_BASE}${feedName}.geojson`
+    );
+
+    if (!response.ok) {
+      throw new Error("USGS request failed");
+    }
+
+    const data = await response.json();
+
+    const quakes = data.features;
+
+    if (!quakes.length) {
+      earthquakeStatus.textContent =
+        "No earthquakes matched this filter right now.";
+      return;
+    }
+
+    earthquakeStatus.style.display = "none";
+
+    quakes
+      .sort((a, b) => b.properties.time - a.properties.time)
+      .forEach((quake) => {
+
+        const props = quake.properties;
+        const mag = props.mag;
+        const magLabel =
+          typeof mag === "number" ? mag.toFixed(1) : "?";
+
+        const li = document.createElement("li");
+
+        const row = document.createElement("a");
+        row.className = "quake-row";
+        row.href = props.url;
+        row.target = "_blank";
+        row.rel = "noopener";
+
+        row.innerHTML = `
+          <div class="quake-mag ${magnitudeClass(mag)}">${magLabel}</div>
+          <div class="quake-info">
+            <div class="quake-place">${props.place || "Unknown location"}</div>
+            <div class="quake-time">${timeAgo(props.time)}</div>
+          </div>
+        `;
+
+        li.appendChild(row);
+        earthquakeList.appendChild(li);
+
+      });
+
+  } catch (error) {
+
+    console.error("Earthquake loading error:", error);
+
+    earthquakeStatus.textContent =
+      "Couldn't load earthquake data right now. Please try again shortly.";
+
+  }
+
+}
+
+
+// ======================
+// OPEN EARTHQUAKE PANEL
+// ======================
+
+earthquakeBtn.addEventListener("click", function (e) {
+
+  e.preventDefault();
+
+  mapSection.style.display = "none";
+  navbar.style.display = "none";
+  earthquakeSection.style.display = "block";
+
+  if (!earthquakesLoaded) {
+    earthquakesLoaded = true;
+    loadEarthquakes(earthquakeRange.value);
+  }
+
+  earthquakeSection.scrollIntoView({ behavior: "smooth" });
+
+});
+
+
+// ======================
+// CLOSE EARTHQUAKE PANEL
+// ======================
+
+closeEarthquake.addEventListener("click", () => {
+
+  earthquakeSection.style.display = "none";
+  navbar.style.display = "flex";
+
+});
+
+
+// ======================
+// CHANGE EARTHQUAKE FILTER
+// ======================
+
+earthquakeRange.addEventListener("change", () => {
+
+  loadEarthquakes(earthquakeRange.value);
 
 });
 

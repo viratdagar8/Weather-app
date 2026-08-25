@@ -20,25 +20,36 @@
       <p>"A Modern Weather Forecasting Web Application"</p>
     </div>
 
-    <ul class="navbar">
-      <li class="nav-item">
-        <a class="nav-link" href="#" id="radarMapBtn">RADAR</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <!-- Profile page -->
-      <li class="Profile-item">
-        <a class="profile-link" href="login.html" id="profileBtn">
+    <nav class="navbar">
+      <div class="nav-left">
+        <!-- Profile page -->
+        <a class="profile-link" href="login.html" id="profileBtn" title="Account">
           <i class="fa-regular fa-circle-user"></i>
         </a>
-      </li>
+
+        <a class="nav-link" href="#" id="radarMapBtn">
+          <i class="fa-solid fa-satellite-dish"></i> Radar
+        </a>
+
+        <a class="nav-link" href="#" id="earthquakeBtn">
+          <i class="fa-solid fa-house-crack"></i> Earthquakes
+        </a>
+
+        <a
+          class="nav-link"
+          href="https://climate.nasa.gov/news/"
+          target="_blank"
+          rel="noopener"
+        >
+          <i class="fa-solid fa-newspaper"></i> Climate News
+        </a>
+      </div>
+
       <!-- Dark mode -->
-      <li class="nav-item"></li>
-      <li class="theme-item">
+      <div class="nav-right">
         <button id="themeToggle" class="theme-btn">🌙 Dark</button>
-      </li>
-    </ul>
+      </div>
+    </nav>
 
     <div class="background">
       <div id="mapSection">
@@ -67,6 +78,25 @@
         </div>
 
         <p class="radar-credit">Weather data by RainViewer</p>
+      </div>
+
+      <div id="earthquakeSection">
+        <h2>Recent Earthquake Activity</h2>
+        <button id="closeEarthquake">X</button>
+
+        <div class="earthquake-toolbar">
+          <label for="earthquakeRange">Show:</label>
+          <select id="earthquakeRange">
+            <option value="significant_week">Significant, past 7 days</option>
+            <option value="4.5_week">Magnitude 4.5+, past 7 days</option>
+            <option value="2.5_day">Magnitude 2.5+, past 24 hours</option>
+          </select>
+        </div>
+
+        <div id="earthquakeStatus">Loading recent earthquakes…</div>
+        <ul id="earthquakeList"></ul>
+
+        <p class="radar-credit">Earthquake data by USGS</p>
       </div>
 
       <div class="card">
